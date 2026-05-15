@@ -70,6 +70,10 @@ web_modules/
 .env.*
 !.env.example
 
+# env files (IMPORTANT)
+.env
+task-backend/.env
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
