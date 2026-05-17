@@ -8,13 +8,23 @@ const Task = require("./models/Task");
 
 const cors = require("cors");
 
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
 
 app.use(express.json());
 
 // 🔗 CONEXIÓN A MONGODB
+console.log("MONGO_URI =", process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB conectado"))
+  .then(() => {
+    console.log("✅ MongoDB conectado");
+
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Servidor en http://localhost:${PORT}`);
+    });
+  })
   .catch((err) => console.log("❌ Error de conexión:", err));
 
 // 🧪 RUTA DE PRUEBA
@@ -78,6 +88,8 @@ app.put("/tasks/:id", async (req, res) => {
 });
 
 // 🚀 SERVIDOR (SIEMPRE AL FINAL)
-app.listen(3000, () => {
-  console.log("Servidor en http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor en http://localhost:${PORT}`);
 });
