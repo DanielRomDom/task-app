@@ -20,6 +20,7 @@ function App() {
   const [editText, setEditText] = useState("");
   const [deleteId, setDeleteId] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [showRegister, setShowRegister] = useState(false);
 
   // 📌 cargar tareas
   const loadTasks = useCallback(async () => {
@@ -80,8 +81,21 @@ function App() {
         <div className="card">
           <h1>Task App 🚀</h1>
 
-          <Login setToken={setToken} />
-          <Register />
+          {showRegister ? (
+            <>
+              <Register />
+              <p onClick={() => setShowRegister(false)}>
+                ¿Ya tienes cuenta? Login
+              </p>
+            </>
+          ) : (
+            <>
+              <Login setToken={setToken} />
+              <p onClick={() => setShowRegister(true)}>
+                ¿No tienes cuenta? Regístrate
+              </p>
+            </>
+          )}
         </div>
       </div>
     );
