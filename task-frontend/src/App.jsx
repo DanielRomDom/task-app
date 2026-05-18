@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import TaskList from "./components/TaskList";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import { useCallback } from "react";
 
 import {
   getTasks,
@@ -16,29 +19,32 @@ function App() {
   const [editId, setEditId] = useState(null);
   const [editText, setEditText] = useState("");
   const [deleteId, setDeleteId] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   // 📌 cargar tareas
-  const loadTasks = async () => {
-    const data = await getTasks();
+  const loadTasks = useCallback(async () => {
+    const data = await getTasks(token);
     setTasks(Array.isArray(data) ? data : []);
-  };
+  }, [token]);
 
   useEffect(() => {
-    loadTasks();
-  }, []);
+    if (token) {
+      loadTasks();
+    }
+  }, [token, loadTasks]);
 
   // 📌 crear tarea
   const addTask = async () => {
     if (!titulo.trim()) return;
 
-    await createTask(titulo);
+    await createTask(titulo, token);
     setTitulo("");
     loadTasks();
   };
 
   // 📌 update tarea
   const handleUpdate = async () => {
-    await updateTask(editId, editText);
+    await updateTask(editId, editText, token);
 
     setEditId(null);
     setEditText("");
@@ -57,21 +63,44 @@ function App() {
       }
 
       setTimeout(async () => {
-        await deleteTaskService(id);
+        await deleteTaskService(id, token);
         loadTasks();
       }, 300);
     }, 100);
   };
 
   const handleToggle = async (task) => {
-    await toggleTask(task);
+    await toggleTask(task, token);
     loadTasks();
   };
+
+  if (!token) {
+    return (
+      <div className="container">
+        <div className="card">
+          <h1>Task App 🚀</h1>
+
+          <Login setToken={setToken} />
+          <Register />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container">
       <div className="card">
         <h1>Task App 🚀</h1>
+
+        <button
+          className="logout-btn"
+          onClick={() => {
+            localStorage.removeItem("token");
+            setToken(null);
+          }}
+        >
+          Logout
+        </button>
 
         <div className={`task-form ${editId ? "editing" : ""}`}>
           <input

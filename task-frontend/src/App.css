@@ -208,6 +208,12 @@ ul {
   flex: 1;
 }
 
+.logout-btn {
+  margin-bottom: 10px;
+  background: crimson;
+  color: white;
+}
+
 /* ===== ANIMATIONS ===== */
 
 .edit-form {

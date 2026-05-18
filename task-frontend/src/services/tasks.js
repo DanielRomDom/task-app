@@ -1,36 +1,46 @@
 const API = "https://task-app-59x9.onrender.com/tasks";
 
-export const getTasks = async () => {
-  const res = await fetch(API);
+const authHeader = (token) => ({
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${token}`,
+});
+
+export const getTasks = async (token) => {
+  const res = await fetch(API, {
+    headers: authHeader(token),
+  });
   return res.json();
 };
 
-export const createTask = async (titulo) => {
+export const createTask = async (titulo, token) => {
   return fetch(API, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeader(token),
     body: JSON.stringify({ titulo }),
   });
 };
 
-export const deleteTask = async (id) => {
-  return fetch(`${API}/${id}`, { method: "DELETE" });
+export const deleteTask = async (id, token) => {
+  return fetch(`${API}/${id}`, {
+    method: "DELETE",
+    headers: authHeader(token),
+  });
 };
 
-export const toggleTask = async (task) => {
+export const toggleTask = async (task, token) => {
   const res = await fetch(`${API}/${task._id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeader(token),
     body: JSON.stringify({ completada: !task.completada }),
   });
 
   return res.json();
 };
 
-export const updateTask = async (id, titulo) => {
+export const updateTask = async (id, titulo, token) => {
   return fetch(`${API}/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeader(token),
     body: JSON.stringify({ titulo }),
   });
 };
