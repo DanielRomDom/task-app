@@ -5,25 +5,35 @@ export default function Login({ setToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const data = await loginUser(email, password);
 
     if (data.token) {
-        localStorage.setItem("token", data.token);
-        setToken(data.token);
+      localStorage.setItem("token", data.token);
+      setToken(data.token);
     }
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <h2>Login</h2>
 
-      <input onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" onChange={(e) => setPassword(e.target.value)} />
+      <input
+        placeholder="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
 
-      <button onClick={handleLogin}>
-        Entrar
-      </button>
-    </div>
+      <input
+        type="password"
+        placeholder="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <button type="submit">Entrar</button>
+    </form>
   );
 }

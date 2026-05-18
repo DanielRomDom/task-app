@@ -6,36 +6,42 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
 
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
     const data = await registerUser(email, password);
 
     if (data.error) {
       setMsg(data.error);
     } else {
       setMsg("Usuario creado ✅");
+      setEmail("");
+      setPassword("");
     }
   };
 
   return (
-    <div>
+    <form onSubmit={handleRegister}>
       <h2>Registro</h2>
 
       <input
         placeholder="email"
+        value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
 
       <input
         type="password"
         placeholder="password"
+        value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button onClick={handleRegister}>
+      <button type="submit">
         Registrarse
       </button>
 
       <p>{msg}</p>
-    </div>
+    </form>
   );
 }
