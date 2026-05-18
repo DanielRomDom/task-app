@@ -130,7 +130,7 @@ function App() {
             placeholder={editId ? "Editar tarea..." : "Nueva tarea..."}
           />
 
-          <button onClick={editId ? handleUpdate : addTask}>
+          <button className="btn btn-primary" onClick={editId ? handleUpdate : addTask}>
             {editId ? "Guardar" : "Crear"}
           </button>
 
@@ -164,13 +164,13 @@ function App() {
 
               <div className="modal-buttons">
                 <button
-                  className="cancel-btn"
+                  className="btn btn-neutral"
                   onClick={() => setDeleteId(null)}
                 >
                   Cancelar
                 </button>
 
-                <button className="danger" onClick={() => handleDelete()}>
+                <button className="btn btn-danger" onClick={() => handleDelete()}>
                   Eliminar
                 </button>
               </div>

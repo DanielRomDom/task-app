@@ -21,7 +21,7 @@ export default function Register() {
   };
 
   return (
-    <form onSubmit={handleRegister}>
+    <form className="auth-form" onSubmit={handleRegister}>
       <h2>Registro</h2>
 
       <input
@@ -37,7 +37,7 @@ export default function Register() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button type="submit">
+      <button className="btn btn-primary" type="submit">
         Registrarse
       </button>
 

@@ -17,7 +17,7 @@ export default function Login({ setToken }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="auth-form" onSubmit={handleSubmit}>
       <h2>Login</h2>
 
       <input
@@ -33,7 +33,9 @@ export default function Login({ setToken }) {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button type="submit">Entrar</button>
+      <button className="btn btn-primary" type="submit">
+        Entrar
+      </button>
     </form>
   );
-}
+} 
