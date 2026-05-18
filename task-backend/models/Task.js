@@ -12,6 +12,11 @@ const taskSchema = new mongoose.Schema({
     fecha: {
         type: Date,
         default: Date.now
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     }
 });
 
