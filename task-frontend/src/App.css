@@ -334,12 +334,20 @@ ul {
   }
 
   .task-item {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     gap: 10px;
+    justify-content: space-between;
+  }
+
+  .task-item span {
+    flex: 1;
   }
 
   .buttons {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
     width: 100%;
     justify-content: flex-end;
   }
