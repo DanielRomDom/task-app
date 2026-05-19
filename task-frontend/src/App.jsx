@@ -71,7 +71,7 @@ function App() {
   };
 
   const handleToggle = async (task) => {
-    await toggleTask(task, token);
+    await toggleTask(task._id, token);
     loadTasks();
   };
 
