@@ -66,18 +66,13 @@ function App() {
       setTimeout(async () => {
         await deleteTaskService(id, token);
         loadTasks();
-      }, 180);
+      }, 300);
     }, 100);
   };
 
   const handleToggle = async (task) => {
-    console.log("ANTES:", task.completada);
-
-    await toggleTask(task._id, token);
-
-    await loadTasks();
-
-    console.log("DESPUES: refrescado");
+    await toggleTask(task, token);
+    loadTasks();
   };
 
   if (!token) {
