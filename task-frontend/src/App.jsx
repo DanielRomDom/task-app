@@ -71,12 +71,13 @@ function App() {
   };
 
   const handleToggle = async (task) => {
-    console.log("TOGGLE CLICKED:", task);
+    console.log("ANTES:", task.completada);
 
     await toggleTask(task._id, token);
 
-    console.log("TOGGLE DONE, RELOADING...");
-    loadTasks();
+    await loadTasks();
+
+    console.log("DESPUES: refrescado");
   };
 
   if (!token) {
