@@ -66,13 +66,20 @@ function App() {
       setTimeout(async () => {
         await deleteTaskService(id, token);
         loadTasks();
-      }, 300);
+      }, 180);
     }, 100);
   };
 
   const handleToggle = async (task) => {
+    setTasks((prev) =>
+      prev.map((t) =>
+        t._id === task._id
+          ? { ...t, completed: !t.completed }
+          : t
+      )
+    );
+
     await toggleTask(task, token);
-    loadTasks();
   };
 
   if (!token) {
