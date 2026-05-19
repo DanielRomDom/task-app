@@ -71,8 +71,28 @@ function App() {
   };
 
   const handleToggle = async (task) => {
-    await toggleTask(task, token);
-    loadTasks();
+    // 1. UI INMEDIATA (sin esperar backend)
+    setTasks((prev) =>
+      prev.map((t) =>
+        t._id === task._id
+          ? { ...t, completed: !t.completed }
+          : t
+      )
+    );
+
+    // 2. backend en segundo plano
+    try {
+      await toggleTask(task, token);
+    } catch (err) {
+      // rollback si falla
+      setTasks((prev) =>
+        prev.map((t) =>
+          t._id === task._id
+            ? { ...t, completed: !t.completed }
+            : t
+        )
+      );
+    }
   };
 
   if (!token) {
