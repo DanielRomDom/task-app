@@ -71,28 +71,8 @@ function App() {
   };
 
   const handleToggle = async (task) => {
-    const newValue = !task.completed;
-
-    setTasks((prev) =>
-      prev.map((t) =>
-        t._id === task._id
-          ? { ...t, completed: newValue }
-          : t
-      )
-    );
-
-    try {
-      await toggleTask(task._id, token);
-    } catch (err) {
-      // rollback correcto (NO doble toggle)
-      setTasks((prev) =>
-        prev.map((t) =>
-          t._id === task._id
-            ? { ...t, completed: task.completed }
-            : t
-        )
-      );
-    }
+    await toggleTask(task._id, token);
+    loadTasks();
   };
 
   if (!token) {
