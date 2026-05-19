@@ -103,10 +103,8 @@ function App() {
 
   return (
     <div className="container">
-      <div className="card">
-        <h1>Task App 🚀</h1>
 
-        <button
+      <button
           className="logout-btn"
           onClick={() => {
             localStorage.removeItem("token");
@@ -115,6 +113,9 @@ function App() {
         >
           Logout
         </button>
+        
+      <div className="card">
+        <h1>Task App 🚀</h1>
 
         <div className={`task-form ${editId ? "editing" : ""}`}>
           <input
