@@ -71,15 +71,8 @@ function App() {
   };
 
   const handleToggle = async (task) => {
-    setTasks((prev) =>
-      prev.map((t) =>
-        t._id === task._id
-          ? { ...t, completed: !t.completed }
-          : t
-      )
-    );
-
     await toggleTask(task, token);
+    loadTasks();
   };
 
   if (!token) {
