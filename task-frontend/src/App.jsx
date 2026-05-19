@@ -66,7 +66,7 @@ function App() {
       setTimeout(async () => {
         await deleteTaskService(id, token);
         loadTasks();
-      }, 300);
+      }, 180);
     }, 100);
   };
 
