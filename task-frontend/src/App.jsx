@@ -71,24 +71,24 @@ function App() {
   };
 
   const handleToggle = async (task) => {
-    // 1. UI INMEDIATA (sin esperar backend)
+    const newValue = !task.completed;
+
     setTasks((prev) =>
       prev.map((t) =>
         t._id === task._id
-          ? { ...t, completed: !t.completed }
+          ? { ...t, completed: newValue }
           : t
       )
     );
 
-    // 2. backend en segundo plano
     try {
-      await toggleTask(task, token);
+      await toggleTask(task._id, token);
     } catch (err) {
-      // rollback si falla
+      // rollback correcto (NO doble toggle)
       setTasks((prev) =>
         prev.map((t) =>
           t._id === task._id
-            ? { ...t, completed: !t.completed }
+            ? { ...t, completed: task.completed }
             : t
         )
       );
