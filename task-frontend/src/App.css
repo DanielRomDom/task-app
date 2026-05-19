@@ -109,6 +109,11 @@ h1 {
 
 .task-form button {
   min-width: 90px;
+  min-height: 44px;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .task-form.editing {
@@ -325,6 +330,7 @@ ul {
 
   .task-form button {
     width: 100%;
+    min-height: 44px;
   }
 
   .task-item {
