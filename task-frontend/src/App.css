@@ -338,7 +338,6 @@ ul {
     align-items: center;
     gap: 10px;
     justify-content: space-between;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
