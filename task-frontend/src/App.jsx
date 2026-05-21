@@ -19,9 +19,8 @@ function App() {
   const [editId, setEditId] = useState(null);
   const [editText, setEditText] = useState("");
   const [deleteId, setDeleteId] = useState(null);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
   const [showRegister, setShowRegister] = useState(false);
-  const [authReady, setAuthReady] = useState(false);
 
   // 📌 cargar tareas
   const loadTasks = useCallback(async () => {
@@ -37,17 +36,10 @@ function App() {
   }, [token]);
 
   useEffect(() => {
-    if (!authReady) return;
     if (!token) return;
 
     loadTasks();
-  }, [token, authReady, loadTasks]);
-
-  useEffect(() => {
-    const savedToken = localStorage.getItem("token");
-    setToken(savedToken);
-    setAuthReady(true);
-  }, []);
+  }, [token, loadTasks]);
 
   // 📌 crear tarea
   const addTask = async () => {
