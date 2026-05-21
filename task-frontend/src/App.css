@@ -338,10 +338,15 @@ ul {
     align-items: center;
     gap: 10px;
     justify-content: space-between;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .task-item span {
     flex: 1;
+    min-width: 120px;
+    word-break: break-word;
   }
 
   .buttons {
