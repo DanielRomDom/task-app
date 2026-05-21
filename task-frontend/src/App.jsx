@@ -19,13 +19,20 @@ function App() {
   const [editId, setEditId] = useState(null);
   const [editText, setEditText] = useState("");
   const [deleteId, setDeleteId] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
   const [showRegister, setShowRegister] = useState(false);
 
   // 📌 cargar tareas
   const loadTasks = useCallback(async () => {
-    const data = await getTasks(token);
-    setTasks(Array.isArray(data) ? data : []);
+    if (!token) return;
+
+    try {
+      const data = await getTasks(token);
+      setTasks(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Error cargando tareas:", err);
+      setTasks([]);
+    }
   }, [token]);
 
   useEffect(() => {
