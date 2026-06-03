@@ -14,24 +14,35 @@ export default function Register({ setToken }) {
     setMsg("");
 
     try {
+      // 1. registrar usuario
       const data = await registerUser(email, password);
 
       if (data.error) {
         setMsg(data.error);
-        setLoading(false);
         return;
       }
 
-      setMsg("Usuario creado. Iniciando sesión...");
+      setMsg("Creando sesión...");
 
-      const loginData = await loginUser(email, password);
+      // 2. pequeño retry de login (IMPORTANTE en Render)
+      let loginData = null;
 
-      if (loginData.token) {
+      for (let i = 0; i < 3; i++) {
+        loginData = await loginUser(email, password);
+
+        if (loginData?.token) break;
+
+        await new Promise((r) => setTimeout(r, 800));
+      }
+
+      // 3. si login OK → entrar
+      if (loginData?.token) {
         localStorage.setItem("token", loginData.token);
         setToken(loginData.token);
       } else {
-        setMsg("Usuario creado pero no se pudo iniciar sesión");
+        setMsg("Usuario creado, pero el login tardó demasiado. Inicia sesión.");
       }
+
     } catch (err) {
       setMsg("Error de conexión con el servidor");
     } finally {
