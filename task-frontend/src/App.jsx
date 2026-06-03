@@ -41,6 +41,18 @@ function App() {
     loadTasks();
   }, [token, loadTasks]);
 
+  useEffect(() => {
+    const wakeServer = async () => {
+      try {
+        await fetch("https://task-app-59x9.onrender.com");
+      } catch (err) {
+        console.log("Servidor aún dormido");
+      }
+    };
+
+    wakeServer();
+  }, []);
+
   // 📌 crear tarea
   const addTask = async () => {
     if (!titulo.trim()) return;

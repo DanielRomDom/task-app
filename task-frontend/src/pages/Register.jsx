@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { registerUser } from "../services/auth";
+import { registerUser, loginUser } from "../services/auth";
 
-export default function Register() {
+export default function Register({ setToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
@@ -13,10 +13,17 @@ export default function Register() {
 
     if (data.error) {
       setMsg(data.error);
+      return;
+    }
+
+    // 🔥 auto login después de registro
+    const loginData = await loginUser(email, password);
+
+    if (loginData.token) {
+      localStorage.setItem("token", loginData.token);
+      setToken(loginData.token);
     } else {
-      setMsg("Usuario creado ✅");
-      setEmail("");
-      setPassword("");
+      setMsg("Usuario creado pero no se pudo iniciar sesión");
     }
   };
 
