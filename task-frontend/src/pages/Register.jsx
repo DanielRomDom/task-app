@@ -18,6 +18,7 @@ export default function Register({ setToken }) {
 
       if (data.error) {
         setMsg(data.error);
+        setLoading(false);
         return;
       }
 
@@ -27,7 +28,7 @@ export default function Register({ setToken }) {
 
       if (loginData.token) {
         localStorage.setItem("token", loginData.token);
-        setToken(loginData.token); // 👉 esto ya te mete dentro de la app
+        setToken(loginData.token);
       } else {
         setMsg("Usuario creado pero no se pudo iniciar sesión");
       }
