@@ -26,6 +26,8 @@ function App() {
   const loadTasks = useCallback(async () => {
     if (!token) return;
 
+    setTasks([]);
+
     try {
       const data = await getTasks(token);
       setTasks(Array.isArray(data) ? data : []);
@@ -36,8 +38,12 @@ function App() {
   }, [token]);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token) {
+      setTasks([]); // 👈 limpia tareas al logout/login
+      return;
+    }
 
+    setTasks([]); // 👈 evita flash de datos antiguos
     loadTasks();
   }, [token, loadTasks]);
 
