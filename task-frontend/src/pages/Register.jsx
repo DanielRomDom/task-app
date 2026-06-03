@@ -5,25 +5,36 @@ export default function Register({ setToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    const data = await registerUser(email, password);
+    setLoading(true);
+    setMsg("");
 
-    if (data.error) {
-      setMsg(data.error);
-      return;
-    }
+    try {
+      const data = await registerUser(email, password);
 
-    // 🔥 auto login después de registro
-    const loginData = await loginUser(email, password);
+      if (data.error) {
+        setMsg(data.error);
+        return;
+      }
 
-    if (loginData.token) {
-      localStorage.setItem("token", loginData.token);
-      setToken(loginData.token);
-    } else {
-      setMsg("Usuario creado pero no se pudo iniciar sesión");
+      setMsg("Usuario creado. Iniciando sesión...");
+
+      const loginData = await loginUser(email, password);
+
+      if (loginData.token) {
+        localStorage.setItem("token", loginData.token);
+        setToken(loginData.token); // 👉 esto ya te mete dentro de la app
+      } else {
+        setMsg("Usuario creado pero no se pudo iniciar sesión");
+      }
+    } catch (err) {
+      setMsg("Error de conexión con el servidor");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,11 +55,11 @@ export default function Register({ setToken }) {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button className="btn btn-primary" type="submit">
-        Registrarse
+       <button className="btn btn-primary" type="submit" disabled={loading}>
+        {loading ? "Creando cuenta..." : "Registrarse"}
       </button>
 
-      <p>{msg}</p>
+      {msg && <p>{msg}</p>}
     </form>
   );
 }
