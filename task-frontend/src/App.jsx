@@ -108,7 +108,7 @@ function App() {
 
           {showRegister ? (
             <>
-              <Register />
+              <Register setToken={setToken} />
               <p onClick={() => setShowRegister(false)}>
                 ¿Ya tienes cuenta? Login
               </p>

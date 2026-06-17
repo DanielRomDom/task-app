@@ -138,9 +138,18 @@ app.post("/register", async (req, res) => {
       password: hashedPassword
     });
 
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
     res.json({
-      _id: user._id,
-      email: user.email
+      token,
+      user: {
+        _id: user._id,
+        email: user.email
+      }
     });
 
   } catch (err) {

@@ -22,25 +22,11 @@ export default function Register({ setToken }) {
         return;
       }
 
-      setMsg("Creando sesión...");
-
-      // 2. pequeño retry de login (IMPORTANTE en Render)
-      let loginData = null;
-
-      for (let i = 0; i < 3; i++) {
-        loginData = await loginUser(email, password);
-
-        if (loginData?.token) break;
-
-        await new Promise((r) => setTimeout(r, 800));
-      }
-
-      // 3. si login OK → entrar
-      if (loginData?.token) {
-        localStorage.setItem("token", loginData.token);
-        setToken(loginData.token);
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        setToken(data.token);
       } else {
-        setMsg("Usuario creado, pero el login tardó demasiado. Inicia sesión.");
+        setMsg(data.error || "Error al registrar");
       }
 
     } catch (err) {
