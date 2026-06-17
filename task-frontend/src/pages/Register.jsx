@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { registerUser, loginUser } from "../services/auth";
+import { registerUser } from "../services/auth";
 
 export default function Register({ setToken }) {
   const [email, setEmail] = useState("");
