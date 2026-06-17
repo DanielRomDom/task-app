@@ -22,11 +22,11 @@ export default function Register({ setToken }) {
         return;
       }
 
-      if (data.token) {
+      if (data?.token) {
         localStorage.setItem("token", data.token);
         setToken(data.token);
       } else {
-        setMsg(data.error || "Error al registrar");
+        setMsg(data?.error || "Usuario creado, pero inicia sesión manual");
       }
 
     } catch (err) {
