@@ -30,7 +30,7 @@ export default function Register({ setToken }) {
       }
 
     } catch (err) {
-      setMsg("Error de conexión con el servidor");
+      setMsg(err.message);
     } finally {
       setLoading(false);
     }
