@@ -7,13 +7,7 @@ export const loginUser = async (email, password) => {
     body: JSON.stringify({ email, password }),
   });
 
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data.error || "Error en login");
-  }
-
-  return data;
+  return res.json();
 };
 
 export const registerUser = async (email, password) => {
@@ -23,11 +17,5 @@ export const registerUser = async (email, password) => {
     body: JSON.stringify({ email, password }),
   });
 
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data.error || "Error en registro");
-  }
-
-  return data;
+  return res.json();
 };
